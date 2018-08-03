@@ -7,6 +7,11 @@
 //
 
 /**
+ 可以通过如下的三种方式完成列表样式：
+ 1、在xib文件中添加UITableView控件；
+ 2、在代码中创建UITableView控件；
+ 3、使用UITableViewController作为视图控制器（自带UITableView控件）。
+ 
  UITableView控件分为两种样式：普通样式(Plain)和分组样式(Grouped)：在Plain样式下，滚动UITableView控件的时候，它的Header不随控件的滚动而滚动，而在Grouped样式下，滚动UITableView控件的时候，它的每个section的Header和Footer是随着控件的滚动而滚动的。
  在xib文件中已经把UITableView控件选为了分组样式(Grouped)样式。
  */
