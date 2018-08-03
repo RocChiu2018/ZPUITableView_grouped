@@ -7,8 +7,7 @@
 //
 
 /**
- UITableView控件分为两种样式：普通样式(Plain)和分组样式(Grouped)；
- 在Plain样式下，滚动UITableView控件的时候，它的Header不随控件的滚动而滚动，而在Grouped样式下，滚动UITableView控件的时候，它的每个section的Header和Footer是随着控件的滚动而滚动的。
+ UITableView控件分为两种样式：普通样式(Plain)和分组样式(Grouped)：在Plain样式下，滚动UITableView控件的时候，它的Header不随控件的滚动而滚动，而在Grouped样式下，滚动UITableView控件的时候，它的每个section的Header和Footer是随着控件的滚动而滚动的。
  在xib文件中已经把UITableView控件选为了分组样式(Grouped)样式。
  */
 #import "ViewController.h"
