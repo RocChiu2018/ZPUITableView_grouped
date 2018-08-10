@@ -38,6 +38,9 @@
                             <constraint firstAttribute="trailing" secondItem="aLc-Jb-IMo" secondAttribute="trailing" id="zsa-fm-xRF"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="aLc-Jb-IMo" id="xi5-Zm-jsk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

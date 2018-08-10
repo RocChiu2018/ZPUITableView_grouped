@@ -12,8 +12,9 @@
  2、在代码中创建UITableView控件；
  3、使用UITableViewController作为视图控制器（自带UITableView控件）。
  
- UITableView控件分为两种样式：普通样式(Plain)和分组样式(Grouped)：在Plain样式下，滚动UITableView控件的时候，它的Header不随控件的滚动而滚动，而在Grouped样式下，滚动UITableView控件的时候，它的每个section的Header和Footer是随着控件的滚动而滚动的。
- 在xib文件中已经把UITableView控件选为了分组样式(Grouped)样式。
+ UITableView控件分为两种样式：普通样式(Plain)和分组样式(Grouped)。这两种样式的UITableView控件都拥有列表的头部视图(tableHeaderView)和列表的尾部视图(tableFooterView)属性，可以通过这两个属性设置UITableView控件的头部视图和尾部视图。除此之外，这两种样式的列表都可以拥有多个分区(Section)，每个分区都可以拥有分区的头部标题(titleForHeader)、分区的头部视图(viewForHeader)和分区的尾部标题(titleForFooter)、分区的尾部视图(viewForFooter)，如果设置了分区的头部/尾部标题的同时又设置了分区的头部/尾部视图，则运行之后只显示分区的头部/尾部视图，而不显示分区的头部/尾部标题，因为分区的头部/尾部视图的优先级要高于标题。如果设置了列表的头部视图(tableHeaderView)和列表的尾部视图(tableFooterView)并且也设置了分区的头部/尾部标题或者视图，之后再运行程序，拖动UITableView控件，（1）在Plain样式下，tableHeaderView和tableFooterView会跟着列表一起滚动，但是每个分区的头部/尾部标题或者视图会固定不动，不会随着控件的滚动而滚动。（2）在Grouped样式下，tableHeaderView、tableFooterView以及每个分区的头部/尾部标题或者视图都会跟着控件一起滚动。
+ 
+ 此Demo中在xib文件中已经把UITableView控件选为了分组样式(Grouped)样式。
  */
 #import "ViewController.h"
 #import "ZPCar.h"
@@ -22,6 +23,7 @@
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *groups;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -54,7 +56,51 @@
         
         carGroup1.cars = [NSArray arrayWithObjects:car4, car5, car6, nil];
         
-        _groups = [NSArray arrayWithObjects:carGroup0, carGroup1, nil];
+        //封装日系车的ZPCarGroup对象
+        ZPCarGroup *carGroup2 = [[ZPCarGroup alloc] init];
+        carGroup2.header = @"日系";
+        carGroup2.footer = @"日本的汽车";
+        
+        ZPCar *car7 = [ZPCar carWithName:@"奥迪1" icon:@"m_9_100"];
+        ZPCar *car8 = [ZPCar carWithName:@"宝马1" icon:@"m_8_100"];
+        ZPCar *car9 = [ZPCar carWithName:@"奔驰1" icon:@"m_6_100"];
+        
+        carGroup2.cars = [NSArray arrayWithObjects:car7, car8, car9, nil];
+        
+        //封装日系车的ZPCarGroup对象
+        ZPCarGroup *carGroup3 = [[ZPCarGroup alloc] init];
+        carGroup3.header = @"日系";
+        carGroup3.footer = @"日本的汽车";
+        
+        ZPCar *car10 = [ZPCar carWithName:@"奥迪1" icon:@"m_9_100"];
+        ZPCar *car11 = [ZPCar carWithName:@"宝马1" icon:@"m_8_100"];
+        ZPCar *car12 = [ZPCar carWithName:@"奔驰1" icon:@"m_6_100"];
+        
+        carGroup3.cars = [NSArray arrayWithObjects:car10, car11, car12, nil];
+        
+        //封装日系车的ZPCarGroup对象
+        ZPCarGroup *carGroup4 = [[ZPCarGroup alloc] init];
+        carGroup4.header = @"日系";
+        carGroup4.footer = @"日本的汽车";
+        
+        ZPCar *car13 = [ZPCar carWithName:@"奥迪1" icon:@"m_9_100"];
+        ZPCar *car14 = [ZPCar carWithName:@"宝马1" icon:@"m_8_100"];
+        ZPCar *car15 = [ZPCar carWithName:@"奔驰1" icon:@"m_6_100"];
+        
+        carGroup4.cars = [NSArray arrayWithObjects:car13, car14, car15, nil];
+        
+        //封装日系车的ZPCarGroup对象
+        ZPCarGroup *carGroup5 = [[ZPCarGroup alloc] init];
+        carGroup5.header = @"日系";
+        carGroup5.footer = @"日本的汽车";
+        
+        ZPCar *car16 = [ZPCar carWithName:@"奥迪1" icon:@"m_9_100"];
+        ZPCar *car17 = [ZPCar carWithName:@"宝马1" icon:@"m_8_100"];
+        ZPCar *car18 = [ZPCar carWithName:@"奔驰1" icon:@"m_6_100"];
+        
+        carGroup5.cars = [NSArray arrayWithObjects:car16, car17, car18, nil];
+        
+        _groups = [NSArray arrayWithObjects:carGroup0, carGroup1, carGroup2, carGroup3, carGroup4, carGroup5, nil];
     }
     
     return _groups;
@@ -65,6 +111,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    self.tableView.tableHeaderView = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    self.tableView.tableFooterView = [UIButton buttonWithType:UIButtonTypeInfoDark];
 }
 
 #pragma mark ————— UITableViewDataSource —————
@@ -121,6 +170,27 @@
     
     return group.footer;
 }
+
+#pragma mark ————— UITableViewDelegate —————
+/**
+ 每个分区的头部视图
+ */
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIImageView *sectionHeaderImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"scenery"]];
+//
+//    return sectionHeaderImageView;
+//}
+
+/**
+ 每个分区的尾部视图
+ */
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//    UIImageView *sectionFooterImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"timg"]];
+//
+//    return sectionFooterImageView;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
